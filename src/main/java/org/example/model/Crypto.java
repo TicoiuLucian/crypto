@@ -5,11 +5,8 @@ import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByPosition;
 import lombok.*;
 import org.example.model.converter.LocalDateTimeConverter;
-import org.example.service.CryptoService;
 
-import java.beans.Transient;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
