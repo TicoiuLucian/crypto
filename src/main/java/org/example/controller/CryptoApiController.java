@@ -23,25 +23,26 @@ import java.util.Map;
 @RequestMapping("/crypto")
 public class CryptoApiController implements CryptoApi {
 
-    private final CryptoService cryptoService;
+  private final CryptoService cryptoService;
 
-    @RateLimited
-    public ResponseEntity<List<Crypto>> getSortedCryptosByNormalizedRange() {
-        return new ResponseEntity<>(cryptoService.calculateNormalizedRangesAndSort(), HttpStatus.OK);
-    }
+  @RateLimited
+  public ResponseEntity<List<Crypto>> getSortedCryptosByNormalizedRange() {
+    return new ResponseEntity<>(cryptoService.calculateNormalizedRangesAndSort(), HttpStatus.OK);
+  }
 
-    @RateLimited
-    public ResponseEntity<Map<String, List<Crypto>>> getStatisticsForMonthAndYear(@PathVariable int year, @PathVariable int month) throws InvalidDateException {
-        return new ResponseEntity<>(cryptoService.getStatisticsByMonthAndYear(year, month), HttpStatus.OK);
-    }
+  @RateLimited
+  public ResponseEntity<Map<String, List<Crypto>>> getStatisticsForMonthAndYear(
+          @PathVariable int year, @PathVariable int month) throws InvalidDateException {
+    return new ResponseEntity<>(cryptoService.getStatisticsByMonthAndYear(year, month), HttpStatus.OK);
+  }
 
-    @RateLimited
-    public ResponseEntity<List<Pair<String, Crypto>>> getStatisticsForCrypto(@PathVariable Symbol crypto) {
-        return new ResponseEntity<>(cryptoService.getStatisticsForCertainCrypto(crypto), HttpStatus.OK);
-    }
+  @RateLimited
+  public ResponseEntity<List<Pair<String, Crypto>>> getStatisticsForCrypto(@PathVariable Symbol crypto) {
+    return new ResponseEntity<>(cryptoService.getStatisticsForCertainCrypto(crypto), HttpStatus.OK);
+  }
 
-    @RateLimited
-    public ResponseEntity<Crypto> getHighestNormalizedRange(@RequestBody LocalDate date) {
-        return new ResponseEntity<>(cryptoService.getCryptoWithHighestNormalizedRange(date), HttpStatus.OK);
-    }
+  @RateLimited
+  public ResponseEntity<Crypto> getHighestNormalizedRange(@RequestBody LocalDate date) {
+    return new ResponseEntity<>(cryptoService.getCryptoWithHighestNormalizedRange(date), HttpStatus.OK);
+  }
 }

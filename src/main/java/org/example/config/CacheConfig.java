@@ -2,6 +2,7 @@ package org.example.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.example.service.impl.util.CryptoServiceUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -14,19 +15,24 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableCaching
 public class CacheConfig {
+  @Value("${cache.expire.interval.minutes}")
+  private Integer expireInterval;
 
-    @Bean
-    public CacheManager cacheManager() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager();
-        cacheManager.setCaffeine(caffeineCacheBuilder());
-        cacheManager.setCacheNames(List.of(CryptoServiceUtil.CACHE_NAME));
-        return cacheManager;
-    }
+  @Value("${cache.maximum.entries}")
+  private Integer maxEntries;
 
-    public Caffeine<Object, Object> caffeineCacheBuilder() {
-        return com.github.benmanes.caffeine.cache.Caffeine.newBuilder()
-                .expireAfterWrite(10, TimeUnit.MINUTES)
-                .maximumSize(100)
-                .recordStats();
-    }
+  @Bean
+  public CacheManager cacheManager() {
+    CaffeineCacheManager cacheManager = new CaffeineCacheManager();
+    cacheManager.setCaffeine(caffeineCacheBuilder());
+    cacheManager.setCacheNames(List.of(CryptoServiceUtil.CACHE_NAME));
+    return cacheManager;
+  }
+
+  public Caffeine<Object, Object> caffeineCacheBuilder() {
+    return com.github.benmanes.caffeine.cache.Caffeine.newBuilder()
+            .expireAfterWrite(expireInterval, TimeUnit.MINUTES)
+            .maximumSize(maxEntries)
+            .recordStats();
+  }
 }

@@ -15,16 +15,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Crypto {
 
-    @CsvCustomBindByPosition(position = 0, converter = LocalDateTimeConverter.class)
-    private LocalDateTime timestamp;
+  @CsvCustomBindByPosition(position = 0, converter = LocalDateTimeConverter.class)
+  private LocalDateTime timestamp;
 
-    @CsvBindByPosition(position = 1)
-    private Symbol symbol;
+  @CsvBindByPosition(position = 1)
+  private Symbol symbol;
 
-    @CsvBindByPosition(position = 2)
-    private Double price;
+  @CsvBindByPosition(position = 2)
+  private Double price;
 
-    @JsonIgnore
-    private Double normalizedRange;
-
+  @JsonIgnore
+  private Double normalizedRange;
 }
